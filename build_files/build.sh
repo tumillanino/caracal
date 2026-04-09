@@ -210,13 +210,19 @@ dnf5 -y install \
 
 # ── System configuration ──────────────────────────────────────────────────────
 
+# Add Homebrew (linuxbrew) to the sudo secure_path so brew-installed tools
+# are accessible under sudo. Not done via sudoers.d so upstream changes
+# to the base sudoers file are still picked up on image updates.
+# Adapted from https://github.com/ublue-os/aurora (Aurora contributors)
+sed -Ei "s/secure_path = (.*)/secure_path = \1:\/home\/linuxbrew\/.linuxbrew\/bin/" /etc/sudoers
+
 # CPU governor: default to performance mode for low-latency audio
-mkdir -p /usr/etc/sysconfig
-echo 'START_OPTS="--governor performance"' > /usr/etc/sysconfig/cpupower
+mkdir -p /etc/sysconfig
+echo 'START_OPTS="--governor performance"' > /etc/sysconfig/cpupower
 
 # Realtime/memlock permissions for audio production groups
-mkdir -p /usr/etc/security/limits.d
-cat > /usr/etc/security/limits.d/audio.conf << 'EOF'
+mkdir -p /etc/security/limits.d
+cat > /etc/security/limits.d/audio.conf << 'EOF'
 @audio    -  rtprio     95
 @audio    -  memlock    unlimited
 @realtime -  rtprio     95
@@ -230,6 +236,7 @@ getent group audio || groupadd -r audio
 # ── Services ──────────────────────────────────────────────────────────────────
 systemctl enable cpupower.service
 systemctl enable podman.socket
+systemctl enable brew-setup.service
 
 # ── Plugins / instruments installed system-wide ───────────────────────────────
 # Surge XT and Decent Sampler are installed for all users at build time.
@@ -250,3 +257,8 @@ rm -rf \
     /var/lib/alternatives \
     /var/log/dnf* \
     /var/log/hawkey*
+
+# cachyos-settings and cachyos-ksm-settings install files into /usr/etc.
+# bootc treats /usr/etc as an internal implementation detail — it must not
+# exist in the image. Remove it so the lint and deployment both pass.
+rm -rf /usr/etc

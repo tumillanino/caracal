@@ -3,15 +3,23 @@ FROM scratch AS ctx
 COPY build_files /
 COPY system_files/assets /assets
 
+# Homebrew — provides /usr/share/homebrew.tar.zst and brew-setup.service
+# https://github.com/ublue-os/brew
+FROM ghcr.io/ublue-os/brew:latest AS brew
+
 # Base Image — Fedora Kinoite (KDE) with Universal Blue additions
 FROM quay.io/fedora-ostree-desktops/kinoite:43
 
 ### Pre-install system configuration files
 ## Copied directly into the image before the build script runs.
-## /usr/etc: KDE/XDG config, hostname, skel (bootc convention: distro configs go in /usr/etc)
+## /etc: KDE/XDG config, hostname, skel
 ## /usr: Plasma themes, Plymouth config, ujust recipes, runtime install scripts
-COPY system_files/etc /usr/etc
+COPY system_files/etc /etc
 COPY system_files/usr /usr
+
+# Copy Homebrew archive and setup service from the brew stage
+# Credit: https://github.com/ublue-os/brew contributors
+COPY --from=brew /system_files /
 
 ### Build
 ## All package installation, kernel swap, branding, and plugin setup
