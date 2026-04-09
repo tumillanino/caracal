@@ -72,7 +72,7 @@ Plugins are installed system-wide in LV2, VST3, and CLAP formats where available
 ### Switch to Caracal-OS
 
 ```bash
-sudo bootc switch ghcr.io/tumillanino/caracal-os:latest
+sudo bootc switch ghcr.io/caracal-dev/caracal:latest
 ```
 
 Reboot to apply. On first login, add yourself to the audio and realtime groups:
@@ -115,7 +115,7 @@ See the [Justfile](./Justfile) for all available recipes.
 All published images are signed with [cosign](https://github.com/sigstore/cosign). Verify with:
 
 ```bash
-cosign verify --key cosign.pub ghcr.io/tumillanino/caracal-os:latest
+cosign verify --key cosign.pub ghcr.io/caracal-dev/caracal:latest
 ```
 
 ---

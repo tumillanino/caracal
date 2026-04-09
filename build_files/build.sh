@@ -250,3 +250,8 @@ rm -rf \
     /var/lib/alternatives \
     /var/log/dnf* \
     /var/log/hawkey*
+
+# Some packages (e.g. cachyos-settings) install config to /usr/etc, which
+# conflicts with /etc in a bootc image. Our config lives in /etc, so remove
+# /usr/etc entirely.
+rm -rf /usr/etc
