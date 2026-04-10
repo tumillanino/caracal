@@ -9,11 +9,6 @@ SCRIPTS_DIR="/ctx/scripts"
 
 # ── Repositories ──────────────────────────────────────────────────────────────
 
-# CachyOS kernel + addons (provides: kernel-cachyos-lto, cachyos-settings,
-# cachyos-ksm-settings, scx-manager, scx-scheds-git, scx-tools-git)
-dnf5 -y copr enable bieszczaders/kernel-cachyos-lto
-dnf5 -y copr enable bieszczaders/kernel-cachyos-addons
-
 # Wine TKG (provides: wine, yabridge)
 dnf5 -y copr enable patrickl/wine-tkg
 
@@ -22,11 +17,6 @@ dnf5 -y copr enable timlau/audio
 
 # eza (modern ls replacement)
 dnf5 -y copr enable alternateved/eza
-
-# ── Kernel swap ───────────────────────────────────────────────────────────────
-# Replace the stock Fedora kernel with the CachyOS LTO kernel.
-# Must happen before other package installs so the correct kernel headers are present.
-bash "${SCRIPTS_DIR}/cachyos-kernel.sh"
 
 # ── Realtime support ──────────────────────────────────────────────────────────
 dnf5 -y install realtime-setup
@@ -97,16 +87,12 @@ dnf5 -y install \
     dragonfly-reverb-lv2 \
     eza
 
-# ── CachyOS performance packages ──────────────────────────────────────────────
-# cachyos-settings: kernel tunables and sysctl optimisations
-# cachyos-ksm-settings: Kernel Samepage Merging tuning (reduces RAM usage)
-# scx-*: sched-ext schedulers; scx_lavd is ideal for low-latency realtime audio
+# ── sched-ext schedulers ──────────────────────────────────────────────────────
+# The Bazzite kernel includes sched-ext (SCX) support.
+# scx_lavd is ideal for low-latency realtime audio workloads.
 dnf5 -y install \
-    cachyos-settings \
-    cachyos-ksm-settings \
-    scx-manager \
-    scx-scheds-git \
-    scx-tools-git
+    scx-scheds \
+    scx-tools
 
 # ── General tooling ───────────────────────────────────────────────────────────
 dnf5 -y install \
