@@ -18,6 +18,9 @@ dnf5 -y copr enable timlau/audio
 # eza (modern ls replacement)
 dnf5 -y copr enable alternateved/eza
 
+# Universal Blue packages (provides: krunner-bazaar)
+dnf5 -y copr enable ublue-os/packages
+
 # ── Realtime support ──────────────────────────────────────────────────────────
 dnf5 -y install realtime-setup
 
@@ -29,6 +32,12 @@ dnf5 -y remove \
     zram-generator-defaults \
     nano \
     vim-minimal || true
+
+# Remove Fedora logos so no Fedora branding leaks through (GRUB, icon cache, etc.)
+# Swap to generic-logos first (satisfies virtual 'system-logos' provides), then erase it.
+# Branding.sh installs our own distributor logo afterwards.
+dnf5 -y swap fedora-logos generic-logos
+rpm --erase --nodeps --nodb generic-logos
 
 # ── COPR audio packages ───────────────────────────────────────────────────────
 dnf5 -y install \
@@ -87,6 +96,9 @@ dnf5 -y install \
     dragonfly-reverb-lv2 \
     eza
 
+
+# ── Bazaar store ──────────────────────────────────────────────────────────────
+dnf5 -y install krunner-bazaar
 
 # ── General tooling ───────────────────────────────────────────────────────────
 dnf5 -y install \
