@@ -257,7 +257,3 @@ rm -rf \
     /var/log/dnf* \
     /var/log/hawkey*
 
-# cachyos-settings and cachyos-ksm-settings install files into /usr/etc.
-# bootc treats /usr/etc as an internal implementation detail — it must not
-# exist in the image. Remove it so the lint and deployment both pass.
-rm -rf /usr/etc
