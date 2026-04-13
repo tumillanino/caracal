@@ -13,7 +13,7 @@ SCRIPTS_DIR="/ctx/scripts"
 # a dedicated COPY-to-/etc layer in the Containerfile, which would create an
 # OCI layer structure with /etc and /usr/etc content in separate layers and
 # cause bootc switch to fail with "Tree contains both /etc and /usr/etc".
-rsync -rvKl /ctx/system_files/shared/ /
+rsync -rvKlO /ctx/system_files/shared/ /
 
 # ── Repositories ──────────────────────────────────────────────────────────────
 
