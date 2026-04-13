@@ -19,11 +19,6 @@ cp -rT /tmp/bitwig-extract/usr /usr/local
 # Symlink binary into PATH
 ln -sf /opt/bitwig-studio/bitwig-studio /usr/local/bin/bitwig-studio
 
-# Fix paths in .desktop file
-if [ -f /usr/local/share/applications/com.bitwig.BitwigStudio.desktop ]; then
-    sed -i 's|/opt/bitwig-studio|/opt/bitwig-studio|g' \
-        /usr/local/share/applications/com.bitwig.BitwigStudio.desktop
-fi
 
 # Bitwig needs libbz2.so.1.0 but Fedora ships libbz2.so.1
 ln -sf /usr/lib64/libbz2.so.1 /usr/lib64/libbz2.so.1.0

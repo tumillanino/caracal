@@ -90,14 +90,13 @@ route-plugins:
     set -euo pipefail
     echo 'Configuring Reaper plugin paths...'
     mkdir -p ~/.config/REAPER
-    touch ~/.config/REAPER/reaper.ini
-    sed -i '/^vstpath=/ s/$/;\/usr\/lib64\/vst3;\/usr\/lib64\/vst/' ~/.config/REAPER/reaper.ini
-    sed -i '/^lv2path=/ s/$/;\/usr\/lib64\/lv2/' ~/.config/REAPER/reaper.ini
-    sed -i '/^clappath=/ s/$/;\/usr\/lib64\/clap/' ~/.config/REAPER/reaper.ini
-    mkdir -p ~/.vst3 ~/.vst
+    # Copy system plugins to user directories (default scan paths — no ini required)
+    mkdir -p ~/.vst3 ~/.lv2 ~/.clap ~/.vst
     cp -rn /usr/lib64/vst3/* ~/.vst3/ 2>/dev/null || true
-    cp -rn /usr/lib64/vst/* ~/.vst/ 2>/dev/null || true
-    echo 'Paths updated. Restart Reaper and clear cache/rescan.'
+    cp -rn /usr/lib64/vst/*  ~/.vst/  2>/dev/null || true
+    cp -rn /usr/lib64/lv2/*  ~/.lv2/  2>/dev/null || true
+    cp -rn /usr/lib64/clap/* ~/.clap/ 2>/dev/null || true
+    echo 'Plugins copied. Restart Reaper and rescan plugins.'
 
 # ── Flatpaks ──────────────────────────────────────────────────────────────────
 
