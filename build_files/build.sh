@@ -122,7 +122,8 @@ dnf5 -y install \
     fd-find \
     zoxide \
     fzf \
-    oh-my-posh
+    oh-my-posh \
+    ublue-os-just
 
 # ── Open-source DAWs ──────────────────────────────────────────────────────────
 dnf5 -y install \
