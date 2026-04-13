@@ -353,14 +353,14 @@ install-flatpaks:
     echo "Installing Caracal OS recommended flatpaks..."
     sudo flatpak install -y flathub \
         org.tenacityaudio.Tenacity \
-        app.zen_browser.zen \
+        io.github.zen_browser.zen \
         com.ranfdev.DistroShelf \
         org.kde.haruna \
         org.gnome.Decibels \
         "io.github.b43NnUNF4vidFYFhpqaLWy2ANawtRbMtUXZY9Pf.jumpdf" \
         org.gnome.Loupe
-    # Remove Firefox (replaced by Zen Browser)
-    flatpak uninstall --user -y org.mozilla.firefox 2>/dev/null || true
+    # Remove Firefox (replaced by Zen Browser); installed system-wide on Kinoite
+    sudo flatpak uninstall -y org.mozilla.firefox 2>/dev/null || true
     echo "Flatpaks installed."
 
 # ── DAW installation ──────────────────────────────────────────────────────────
