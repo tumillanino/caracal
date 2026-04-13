@@ -1,0 +1,5 @@
+brew "atuin"
+brew "bash-preexec"
+brew "eza"
+brew "ugrep"
+brew "zoxide"
