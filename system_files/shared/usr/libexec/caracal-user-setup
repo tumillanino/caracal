@@ -64,14 +64,15 @@ fi
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || true
 
 flatpak install --user -y flathub \
+  io.github.kolunmi.Bazaar \
   app.zen_browser.zen \
   org.tenacityaudio.Tenacity \
   com.ranfdev.DistroShelf \
   org.kde.haruna \
   org.gnome.Decibels \
   "io.github.b43NnUNF4vidFYFhpqaLWy2ANawtRbMtUXZY9Pf.jumpdf" \
-  org.gnome.Loupe \
-  || true
+  org.gnome.Loupe ||
+  true
 
 # Remove Firefox (replaced by Zen Browser).
 # Try both user and system scope so rebases away from browser-heavy images
@@ -79,5 +80,5 @@ flatpak install --user -y flathub \
 flatpak uninstall --user -y org.mozilla.firefox 2>/dev/null || true
 flatpak uninstall --system -y org.mozilla.firefox 2>/dev/null || true
 
-echo "$USER_SETUP_VER" > "$USER_SETUP_VER_FILE"
+echo "$USER_SETUP_VER" >"$USER_SETUP_VER_FILE"
 echo "caracal-user-setup v$USER_SETUP_VER complete."

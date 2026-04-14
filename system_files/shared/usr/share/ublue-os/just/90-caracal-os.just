@@ -358,6 +358,7 @@ install-flatpaks:
     echo "Installing Caracal OS recommended flatpaks..."
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install --user -y flathub \
+        io.github.kolunmi.Bazaar \
         org.tenacityaudio.Tenacity \
         app.zen_browser.zen \
         com.ranfdev.DistroShelf \
