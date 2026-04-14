@@ -297,7 +297,9 @@ first-run:
     # Set up Wine-native VST bridge
     export WINELOADER='/opt/wine-staging/bin/wine'
     wineboot -u
-    yabridgectl add "$HOME/.wine/drive_c/Program Files/Common Files/VST3"
+    vst3_dir="$HOME/.wine/drive_c/Program Files/Common Files/VST3"
+    mkdir -p "$vst3_dir"
+    yabridgectl add "$vst3_dir"
     yabridgectl sync
 
     echo 'First-run setup complete. Log out and back in for group changes to take effect.'
@@ -310,7 +312,9 @@ setup-audio:
     set -euo pipefail
     export WINELOADER='/opt/wine-staging/bin/wine'
     wineboot -u
-    yabridgectl add "$HOME/.wine/drive_c/Program Files/Common Files/VST3"
+    vst3_dir="$HOME/.wine/drive_c/Program Files/Common Files/VST3"
+    mkdir -p "$vst3_dir"
+    yabridgectl add "$vst3_dir"
     yabridgectl sync
 
 # Install Oh-My-Zsh and plugins
