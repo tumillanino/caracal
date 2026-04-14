@@ -30,6 +30,9 @@ A custom [bootc](https://github.com/bootc-dev/bootc) image built on Fedora Kinoi
 ujust install-reaper
 ujust install-renoise
 ujust install-bitwig
+ujust uninstall-reaper
+ujust uninstall-renoise
+ujust uninstall-bitwig
 ```
 
 ### Plugins & Instruments

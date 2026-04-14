@@ -377,6 +377,11 @@ install-reaper:
     sudo /usr/lib/caracal-os/scripts/install-reaper.sh
     ujust _ask-remove-ardour
 
+uninstall-reaper:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sudo /usr/lib/caracal-os/scripts/uninstall-reaper.sh
+
 # Install Renoise (commercial, free demo available)
 install-renoise:
     #!/usr/bin/env bash
@@ -384,9 +389,19 @@ install-renoise:
     sudo /usr/lib/caracal-os/scripts/install-renoise.sh
     ujust _ask-remove-ardour
 
+uninstall-renoise:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sudo /usr/lib/caracal-os/scripts/uninstall-renoise.sh
+
 # Install Bitwig Studio (commercial, requires licence)
 install-bitwig:
     #!/usr/bin/env bash
     set -euo pipefail
     sudo /usr/lib/caracal-os/scripts/install-bitwig.sh
     ujust _ask-remove-ardour
+
+uninstall-bitwig:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sudo /usr/lib/caracal-os/scripts/uninstall-bitwig.sh

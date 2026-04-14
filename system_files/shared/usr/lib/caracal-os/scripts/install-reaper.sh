@@ -7,6 +7,8 @@ REAPER_VERSION="765"
 REAPER_ARCHIVE="/tmp/reaper.tar.xz"
 REAPER_EXTRACT_DIR="/tmp/reaper_linux_x86_64"
 DESKTOP_TARGET="/usr/local/share/applications/cockos-reaper.desktop"
+ICON_TARGET_DIR="/usr/local/share/pixmaps"
+ICON_TARGET="${ICON_TARGET_DIR}/reaper.png"
 
 cleanup() {
     rm -rf "${REAPER_ARCHIVE}" "${REAPER_EXTRACT_DIR}"
@@ -22,6 +24,7 @@ cd "${REAPER_EXTRACT_DIR}"
 ./install-reaper.sh --install /opt --integrate-desktop
 
 mkdir -p /usr/local/share/applications
+mkdir -p "${ICON_TARGET_DIR}"
 
 # The upstream installer is inconsistent about where it writes the desktop file.
 # Promote it to a system-wide location when present, otherwise write a fallback.
@@ -54,11 +57,38 @@ StartupWMClass=REAPER
 EOF
 fi
 
+# Promote a usable icon into /usr/local so menu/taskbar entries resolve on immutable systems.
+icon_source=""
+for candidate in \
+    "/root/.local/share/icons/hicolor/256x256/apps/reaper.png" \
+    "/root/.local/share/icons/hicolor/128x128/apps/reaper.png" \
+    "/root/.local/share/pixmaps/reaper.png" \
+    "/opt/REAPER/reaper.png" \
+    "${REAPER_EXTRACT_DIR}/reaper.png"
+do
+    if [ -f "${candidate}" ]; then
+        icon_source="${candidate}"
+        break
+    fi
+done
+
+if [ -n "${icon_source}" ]; then
+    install -m644 "${icon_source}" "${ICON_TARGET}"
+fi
+
 # Fix installer-generated paths when present.
 sed -i \
     -e 's|/root/opt/REAPER|/opt/REAPER|g' \
     -e 's|Exec=/root/opt/REAPER/|Exec=/opt/REAPER/|g' \
     "${DESKTOP_TARGET}"
+
+if [ -f "${ICON_TARGET}" ]; then
+    if grep -q '^Icon=' "${DESKTOP_TARGET}"; then
+        sed -i "s|^Icon=.*|Icon=${ICON_TARGET}|" "${DESKTOP_TARGET}"
+    else
+        printf 'Icon=%s\n' "${ICON_TARGET}" >> "${DESKTOP_TARGET}"
+    fi
+fi
 
 echo "REAPER installed to /opt/REAPER"
 echo "Desktop entry written to /usr/local/share/applications/"
