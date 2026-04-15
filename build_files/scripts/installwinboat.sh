@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly WINBOAT_VERSION="0.9.0"
+readonly WINBOAT_RPM="winboat-${WINBOAT_VERSION}-x86_64.rpm"
+readonly WINBOAT_URL="https://github.com/TibixDev/winboat/releases/download/${SURGE_XT_VERSION}/${SURGE_XT_RPM}"
+
+workdir="$(mktemp -d)"
+trap 'rm -rf "${workdir}"' EXIT
+
+curl -fL --retry 3 --retry-delay 2 -o "${workdir}/${WINBOAT_RPM}" "${WINBOAT_URL}"
+dnf5 install -y --nogpgcheck "${workdir}/${WINBOAT_RPM}"
