@@ -3,7 +3,7 @@ set -euo pipefail
 
 readonly WINBOAT_VERSION="0.9.0"
 readonly WINBOAT_RPM="winboat-${WINBOAT_VERSION}-x86_64.rpm"
-readonly WINBOAT_URL="https://github.com/TibixDev/winboat/releases/download/${SURGE_XT_VERSION}/${SURGE_XT_RPM}"
+readonly WINBOAT_URL="https://github.com/TibixDev/winboat/releases/download/${WINBOAT_VERSION}/${WINBOAT_RPM}"
 
 workdir="$(mktemp -d)"
 trap 'rm -rf "${workdir}"' EXIT
