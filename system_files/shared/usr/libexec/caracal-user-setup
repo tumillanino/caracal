@@ -15,7 +15,7 @@ CARACAL_CONFIG_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/caracal"
 mkdir -p "$CARACAL_CONFIG_DIR"
 
 # Bump this when branding or default app changes need re-application across rebases.
-USER_SETUP_VER=7
+USER_SETUP_VER=8
 USER_SETUP_VER_FILE="$CARACAL_CONFIG_DIR/version"
 
 if [[ -f "$USER_SETUP_VER_FILE" ]]; then
@@ -40,6 +40,25 @@ DESIRED_PANEL_LAUNCHERS=(
   "applications:ardour9.desktop"
 )
 DESIRED_PANEL_LAUNCHERS_CSV="$(IFS=,; printf '%s' "${DESIRED_PANEL_LAUNCHERS[*]}")"
+
+DESIRED_KICKOFF_FAVORITES=(
+  "ardour9.desktop"
+  "org.rncbc.qtractor.desktop"
+  "carla.desktop"
+  "org.hydrogenmusic.Hydrogen.desktop"
+  "org.musescore.MuseScore.desktop"
+  "org.tenacityaudio.Tenacity.desktop"
+  "org.rncbc.qjackctl.desktop"
+  "org.rncbc.qsynth.desktop"
+  "yoshimi.desktop"
+  "guitarix.desktop"
+  "sooperlooper.desktop"
+  "org.pulseaudio.pavucontrol.desktop"
+  "preferred://browser"
+  "org.kde.dolphin.desktop"
+  "systemsettings.desktop"
+)
+DESIRED_KICKOFF_FAVORITES_CSV="$(IFS=,; printf '%s' "${DESIRED_KICKOFF_FAVORITES[*]}")"
 
 # -- Lock screen wallpaper --
 # Written directly into the user config so it takes precedence over any stale
@@ -115,6 +134,66 @@ flatpak uninstall --system -y org.mozilla.firefox 2>/dev/null || true
 
 # Ensure existing users also resolve browser launches to Zen Browser.
 mkdir -p "$USER_CONFIG_DIR"
+
+update_kickoff_favorites_file() {
+  local file="$1"
+  local tmp_file
+
+  mkdir -p "$(dirname "$file")"
+  [[ -f "$file" ]] || : >"$file"
+
+  tmp_file="$(mktemp)"
+  awk -v desired="$DESIRED_KICKOFF_FAVORITES_CSV" '
+    function flush_section() {
+      if (in_section && !saw_ordering) {
+        print "ordering=" desired
+      }
+
+      in_section = 0
+      saw_ordering = 0
+    }
+
+    /^\[Favorites-org\.kde\.plasma\.kickoff\.favorites\.instance-[^]]+\]$/ {
+      flush_section()
+      in_section = 1
+      saw_any = 1
+      print
+      next
+    }
+
+    /^\[/ {
+      flush_section()
+      print
+      next
+    }
+
+    in_section && /^ordering=/ {
+      if (!saw_ordering) {
+        print "ordering=" desired
+      }
+      saw_ordering = 1
+      next
+    }
+
+    {
+      print
+    }
+
+    END {
+      flush_section()
+
+      if (!saw_any) {
+        if (NR > 0) {
+          print ""
+        }
+        print "[Favorites-org.kde.plasma.kickoff.favorites.instance-3-global]"
+        print "ordering=" desired
+      }
+    }
+  ' "$file" >"$tmp_file"
+
+  mv "$tmp_file" "$file"
+}
 xdg-settings set default-web-browser app.zen_browser.zen.desktop 2>/dev/null || true
 for mime in \
   text/html \
@@ -161,6 +240,10 @@ if command -v qdbus6 &>/dev/null; then
     }
   ' 2>/dev/null || true
 fi
+
+# Seed the Kickoff favorites menu with standalone studio tools so apps that do
+# not surface as DAW plugins remain easy to discover.
+update_kickoff_favorites_file "$USER_CONFIG_DIR/kactivitymanagerd-statsrc"
 
 if (( flatpak_install_ok )); then
   echo "$USER_SETUP_VER" >"$USER_SETUP_VER_FILE"
