@@ -65,6 +65,23 @@ Plugins are installed system-wide in LV2, VST3, and CLAP formats where available
 - `oh-my-posh` prompt, `eza`, `zoxide`, `fzf`, `ripgrep`, `fd`
 - Neovim, Alacritty, 7zip, rsync
 
+### Instructions to install Vital Synth
+
+Vital is not bundled with the image or build process. To install it after first boot:
+
+1. Create an account at [vital.audio](https://vital.audio) and download the Linux RPM installer labelled as "Linux (rpm)".
+2. Change into the directory where you saved it, for example:
+```bash
+cd ~/Downloads
+```
+
+3. Install it on the host:
+```bash
+sudo rpm-ostree install VitalInstaller.rpm
+```
+
+Reboot after the `rpm-ostree` install completes.
+
 ---
 
 ## Installation
@@ -101,19 +118,6 @@ Then log out and back in for the group changes to take effect.
 ## Building Locally
 
 Requires [just](https://just.systems/) and Podman.
-
-Vital is not bundled with the image or build process. To install it after first boot:
-
-```bash
-# 1. Create an account at https://vital.audio and download the Linux RPM installer.
-# 2. Change into the directory where you saved it, for example:
-cd ~/Downloads
-
-# 3. Install it on the host:
-sudo rpm-ostree install VitalInstaller.rpm
-```
-
-Reboot after the `rpm-ostree` install completes.
 
 ```bash
 # Build the container image

@@ -269,7 +269,7 @@ systemctl --global enable caracal-user-setup.service
 # Winboat is installed for GUI programs that need USB connectivity as Wine is not suitable.
 bash "${SCRIPTS_DIR}/installsurgext.sh"
 bash "${SCRIPTS_DIR}/installdecentsampler.sh"
-bash "${SCRIPTS_DIR}/installwinboat.sh"
+# bash "${SCRIPTS_DIR}/installwinboat.sh"
 
 # ── Branding ──────────────────────────────────────────────────────────────────
 bash "${SCRIPTS_DIR}/branding.sh"
