@@ -10,4 +10,18 @@ workdir="$(mktemp -d)"
 trap 'rm -rf "${workdir}"' EXIT
 
 curl -fL --retry 3 --retry-delay 2 -o "${workdir}/${WINBOAT_RPM}" "${WINBOAT_URL}"
-dnf5 install -y --nogpgcheck "${workdir}/${WINBOAT_RPM}"
+
+# Upstream WinBoat's RPM currently fails to install cleanly in our bootc build
+# environment when rpm tries to create /opt/winboat. Extract the payload
+# directly instead so the image still contains the installed application files.
+install -d /opt
+cd "${workdir}"
+rpm2cpio "${workdir}/${WINBOAT_RPM}" | cpio -idm --quiet --make-directories --no-absolute-filenames
+
+if [[ -d "${workdir}/opt" ]]; then
+    cp -a "${workdir}/opt/." /opt/
+fi
+
+if [[ -d "${workdir}/usr" ]]; then
+    cp -a "${workdir}/usr/." /usr/
+fi

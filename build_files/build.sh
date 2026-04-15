@@ -265,12 +265,10 @@ systemctl --global enable caracal-user-setup.service
 
 # ── Plugins / instruments installed system-wide ───────────────────────────────
 # Surge XT and Decent Sampler are installed for all users at build time.
-# Vital is installed too when vital-synth/VitalInstaller.deb is present in the repo.
 # Reaper, Renoise, and Bitwig are optional — install via: ujust install-<daw>
 # Winboat is installed for GUI programs that need USB connectivity as Wine is not suitable.
 bash "${SCRIPTS_DIR}/installsurgext.sh"
 bash "${SCRIPTS_DIR}/installdecentsampler.sh"
-bash "${SCRIPTS_DIR}/installvital.sh"
 bash "${SCRIPTS_DIR}/installwinboat.sh"
 
 # ── Branding ──────────────────────────────────────────────────────────────────
