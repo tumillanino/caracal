@@ -86,12 +86,14 @@ jobs:
           image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
           chown: ${{ env.USER_UID }}:${{ env.USER_GID }}
           types: ${{ matrix.disk-type }}
-          additional-args: ${{ matrix.disk-type == 'anaconda-iso' && '--use-librepo=True --rootfs=btrfs' || '--use-librepo=True' }}
+          # Keep CI aligned with the local Justfile, which always builds Btrfs-backed images.
+          additional-args: --use-librepo=True --rootfs=btrfs
 
       - name: Upload disk images and Checksum to Job Artifacts
         if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
+          name: ${{ env.IMAGE_NAME }}-${{ inputs.platform || 'amd64' }}-${{ matrix.disk-type }}
           path: ${{ steps.build.outputs.output-directory }}
           if-no-files-found: error
           retention-days: 0
