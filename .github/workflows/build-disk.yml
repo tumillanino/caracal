@@ -65,6 +65,7 @@ jobs:
             echo "OUTPUT_DIR=${GITHUB_WORKSPACE}/output/bootc-installer" >> ${GITHUB_ENV}
             echo "INSTALLER_IMAGE=localhost/${IMAGE_NAME_LOWER}-installer:latest" >> ${GITHUB_ENV}
             echo "PAYLOAD_IMAGE=${IMAGE_REGISTRY_LOWER}/${IMAGE_NAME_LOWER}:${DEFAULT_TAG}" >> ${GITHUB_ENV}
+            echo "LOCAL_PAYLOAD_IMAGE=localhost/${IMAGE_NAME_LOWER}:latest" >> ${GITHUB_ENV}
           fi
 
       - name: Install dependencies
@@ -130,6 +131,7 @@ jobs:
             | sudo tee /etc/containers/storage.conf >/dev/null
 
           sudo podman pull "${PAYLOAD_IMAGE}"
+          sudo podman tag "${PAYLOAD_IMAGE}" "${LOCAL_PAYLOAD_IMAGE}"
           podman save "${INSTALLER_IMAGE}" | sudo podman load
           sudo mkdir -p "${OUTPUT_DIR}"
           sudo podman run \
@@ -141,13 +143,13 @@ jobs:
             --volume "${OUTPUT_DIR}:/output" \
             --volume "${GITHUB_WORKSPACE}/disk_config/iso.toml:/config.toml:ro" \
             "${BIB_IMAGE}" \
-            build \
             --output /output \
             --chown "${USER_UID}:${USER_GID}" \
             --use-librepo=True \
             --rootfs=btrfs \
+            --local \
             --type bootc-installer \
-            --bootc-installer-payload-ref "${PAYLOAD_IMAGE}" \
+            --bootc-installer-payload-ref "${LOCAL_PAYLOAD_IMAGE}" \
             "${INSTALLER_IMAGE}"
 
       - name: Upload disk images and Checksum to Job Artifacts
