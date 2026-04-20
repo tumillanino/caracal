@@ -40,9 +40,6 @@ COPY system_files/assets /assets
 COPY system_files/shared /system_files/shared
 COPY --from=brew /system_files /system_files/shared
 COPY --from=caracal-software-installer-fetch /out/caracal-software-installer /system_files/shared/usr/bin/caracal-software-installer
-COPY caracal-software-installer/scripts /system_files/shared/usr/lib/caracal-software-installer/scripts
-COPY caracal-software-installer/assets /system_files/shared/usr/share/caracal-software-installer/assets
-COPY caracal-software-installer/logo.txt /system_files/shared/usr/share/caracal-software-installer/logo.txt
 
 # Base Image — Fedora Kinoite (KDE) with Universal Blue additions
 FROM quay.io/fedora-ostree-desktops/kinoite:43
