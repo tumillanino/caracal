@@ -14,7 +14,7 @@ A custom [bootc](https://github.com/bootc-dev/bootc) image built on Fedora Kinoi
 
 - **Bazzite kernel** — replaces the stock Fedora kernel with Bazzite's pre-built OCI kernel image
 - **CPU governor** — defaults to `performance` mode
-- **Realtime/memlock limits** — `@audio` and `@realtime` groups preconfigured with `rtprio 95` and unlimited memlock
+- **Realtime/memlock limits** — `@audio` and `@realtime` groups preconfigured with `rtprio 95` and unlimited memlock through both PAM and `systemd`
 
 ### DAWs (included)
 
@@ -125,7 +125,7 @@ Or do the group step manually:
 sudo usermod -aG audio,realtime $USER
 ```
 
-Then log out and back in for the group changes to take effect.
+Then reboot, or at minimum log out and back in, so the new group membership and session limits take effect.
 
 ---
 

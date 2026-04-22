@@ -306,7 +306,7 @@ first-run:
     yabridgectl add "$vst3_dir"
     yabridgectl sync
 
-    echo 'First-run setup complete. Log out and back in for group changes to take effect.'
+    echo 'First-run setup complete. Reboot, or at minimum log out and back in, so group changes and session limits take effect.'
     echo 'Run  ujust install-flatpaks  to install recommended apps.'
     echo 'Run  ujust software-installer  for optional DAWs, plugins, and utilities.'
 
