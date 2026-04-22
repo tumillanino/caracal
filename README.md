@@ -1,3 +1,5 @@
+[![bluebuild build badge](https://github.com/caracal-dev/caracal/actions/workflows/build.yml/badge.svg)](https://github.com/caracal-dev/caracal/actions/workflows/build.yml) 
+[![bluebuild build badge](https://github.com/caracal-dev/caracal/actions/workflows/build-disk.yml/badge.svg)](https://github.com/caracal-dev/caracal/actions/workflows/build-disk.yml)
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/images/caracal-banner-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="assets/images/caracal-banner-light.png">
