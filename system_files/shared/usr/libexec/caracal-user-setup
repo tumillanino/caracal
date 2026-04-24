@@ -43,7 +43,7 @@ drop_user_seeded_kickoff_favorites_if_pristine() {
 }
 
 migrate_legacy_vapor_theme_config() {
-  local current_look_and_feel current_color_scheme current_plasma_theme current_splash_theme
+  local current_look_and_feel current_color_scheme current_plasma_theme
 
   current_look_and_feel="$(
     kreadconfig6 --file "$USER_CONFIG_DIR/kdeglobals" \
@@ -56,10 +56,6 @@ migrate_legacy_vapor_theme_config() {
   current_plasma_theme="$(
     kreadconfig6 --file "$USER_CONFIG_DIR/plasmarc" \
       --group Theme --key name 2>/dev/null || true
-  )"
-  current_splash_theme="$(
-    kreadconfig6 --file "$USER_CONFIG_DIR/ksplashrc" \
-      --group KSplash --key Theme 2>/dev/null || true
   )"
 
   if [[ "$current_look_and_feel" == "com.valve.vapor.desktop" ]]; then
@@ -83,16 +79,14 @@ migrate_legacy_vapor_theme_config() {
       --key name "default"
   fi
 
-  if [[ "$current_splash_theme" == "com.valve.vapor" ]]; then
-    kwriteconfig6 \
-      --file "$USER_CONFIG_DIR/ksplashrc" \
-      --group KSplash \
-      --key Theme "org.kde.Breeze"
+  # Remove any stale ksplashrc for Vapor users
+  if [[ "$current_look_and_feel" == "com.valve.vapor.desktop" ]]; then
+    rm -f "$USER_CONFIG_DIR/ksplashrc"
   fi
 }
 
 # Bump this when user-config migrations need re-application across rebases.
-USER_SETUP_VER=16
+USER_SETUP_VER=17
 
 if [[ -f "$USER_SETUP_VER_FILE" ]]; then
   STORED_VER=$(cat "$USER_SETUP_VER_FILE")
@@ -110,9 +104,7 @@ if [[ -f "$USER_CONFIG_DIR/ksplashrc" ]] &&
   rm -f "$USER_CONFIG_DIR/ksplashrc"
 fi
 
-# Earlier Caracal builds repaired panel pins and Kickoff favorites in user
-# config at login time. Keep only minimal migrations for that legacy state and
-# let the packaged Plasma defaults own new profiles going forward.
+# Earlier Caracal builds repaired panel pins and Kickoff favorites in user config at login time.
 migrate_legacy_vapor_theme_config
 migrate_legacy_panel_launcher_id
 drop_user_seeded_kickoff_favorites_if_pristine
