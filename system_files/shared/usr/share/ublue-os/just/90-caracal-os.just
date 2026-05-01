@@ -485,10 +485,10 @@ first-run:
 
     echo "Routing plugins to user folders"
         mkdir -p ~/.vst3 ~/.lv2 ~/.clap ~/.vst
-    cp -rn /usr/lib64/vst3/* ~/.vst3/ 2>/dev/null || true
-    cp -rn /usr/lib64/vst/*  ~/.vst/  2>/dev/null || true
-    cp -rn /usr/lib64/lv2/*  ~/.lv2/  2>/dev/null || true
-    cp -rn /usr/lib64/clap/* ~/.clap/ 2>/dev/null || true
+    cp -rn -u  /usr/lib64/vst3/* ~/.vst3/ 2>/dev/null || true
+    cp -rn -u /usr/lib64/vst/*  ~/.vst/  2>/dev/null || true
+    cp -rn -u /usr/lib64/lv2/*  ~/.lv2/  2>/dev/null || true
+    cp -rn -u /usr/lib64/clap/* ~/.clap/ 2>/dev/null || true
     
     echo "Audio plugins have been moved to user folders"
 
