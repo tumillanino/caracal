@@ -74,14 +74,14 @@ dnf5 -y install \
 #  vst-DISTRHO-ReFine.x86_64 \
 #  vst-DISTRHO-StereoSourceSeparation.x86_64 \
 #  vst-DISTRHO-SwankyAmp.x86_64 \
-  vst-DISTRHO-TAL.x86_64 \
+#  vst-DISTRHO-TAL.x86_64 \
 #  vst-DISTRHO-Temper.x86_64 \
 #  vst-DISTRHO-Vex.x86_64 \
 #  vst-DISTRHO-Wolpertinger.x86_64 \
 #  vst-DISTRHO-dRowAudio.x86_64 \
-  vst-DISTRHO-drumsynth.x86_64 \
-  vst-DISTRHO-eqinox.x86_64 \
-  vst-DISTRHO-vitalium.x86_64
+#  vst-DISTRHO-drumsynth.x86_64 \
+#  vst-DISTRHO-eqinox.x86_64 \
+#  vst-DISTRHO-vitalium.x86_64
 
 # Bazaar app store
 dnf5 -y install krunner-bazaar
