@@ -501,6 +501,7 @@ first-run:
         com.ranfdev.DistroShelf \
         org.kde.haruna \
         org.gnome.Decibels \
+        it.mijorus.gearlever \
         "io.github.b43NnUNF4vidFYFhpqaLWy2ANawtRbMtUXZY9Pf.jumpdf" \
         org.gnome.Loupe
     # Remove any legacy Firefox flatpak; Zen Browser is the default browser.
