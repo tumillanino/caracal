@@ -69,11 +69,11 @@ dnf5 -y install \
 #  vst-DISTRHO-KlangFalter.x86_64 \
 #  vst-DISTRHO-LUFS.x86_64 \
 #  vst-DISTRHO-Luftikus.x86_64 \
-  vst-DISTRHO-Obxd.x86_64 \
+#  vst-DISTRHO-Obxd.x86_64 \
 #  vst-DISTRHO-PitchedDelay.x86_64 \
 #  vst-DISTRHO-ReFine.x86_64 \
 #  vst-DISTRHO-StereoSourceSeparation.x86_64 \
-  vst-DISTRHO-SwankyAmp.x86_64 \
+#  vst-DISTRHO-SwankyAmp.x86_64 \
   vst-DISTRHO-TAL.x86_64 \
 #  vst-DISTRHO-Temper.x86_64 \
 #  vst-DISTRHO-Vex.x86_64 \
