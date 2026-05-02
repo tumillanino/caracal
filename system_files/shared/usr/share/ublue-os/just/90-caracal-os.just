@@ -521,7 +521,7 @@ first-run:
 
     {
         echo 'export ZSH="$HOME/.oh-my-zsh"'
-        echo 'ZSH_THEME="robbyrussell"'
+        echo 'ZSH_THEME="candy"'
         echo 'plugins=(git'
         echo 'zsh-autosuggestions'
         echo 'zsh-syntax-highlighting'
@@ -529,7 +529,8 @@ first-run:
         echo ')'
         echo 'source $ZSH/oh-my-zsh.sh'
         echo eval "$(atuin init zsh)"  
-        echo eval "$(zoxide init zsh)"        echo alias grep='ug'
+        echo eval "$(zoxide init zsh)"
+        echo alias grep='ug'
         echo alias cd="z"
         echo alias egrep='ug -E'
         echo alias fgrep='ug -F'
@@ -541,6 +542,11 @@ first-run:
         echo alias ls='eza --icons=auto'
         echo alias l1='eza -1'
     } >> ~/.zshrc
+
+    echo "zsh" >~/.bashrc
+    ## Set hostname again in case it is not set properly
+    hostnamectl hostname "caracal"
+    
     echo 'First-run setup complete. Reboot, or at minimum log out and back in, so group changes and session limits take effect.'
     echo 'Run  ujust install-flatpaks  to install recommended apps.'
     echo 'Run  ujust software-installer  for optional DAWs, plugins, and utilities.'
@@ -563,15 +569,13 @@ update-audio:
 route-plugins:
     #!/usr/bin/env bash
     set -euo pipefail
-    echo 'Copying system plugins into Reaper user scan directories...'
-    mkdir -p ~/.config/REAPER
-    # Copy into Reaper's default user scan paths without editing REAPER config files.
+    echo 'Copying system plugins into user scan directories...'
     mkdir -p ~/.vst3 ~/.lv2 ~/.clap ~/.vst
-    cp -rn /usr/lib64/vst3/* ~/.vst3/ 2>/dev/null || true
-    cp -rn /usr/lib64/vst/*  ~/.vst/  2>/dev/null || true
-    cp -rn /usr/lib64/lv2/*  ~/.lv2/  2>/dev/null || true
-    cp -rn /usr/lib64/clap/* ~/.clap/ 2>/dev/null || true
-    echo 'Plugins copied. Restart Reaper and rescan plugins if you choose to use this compatibility fallback.'
+    cp -rn -u /usr/lib64/vst3/* ~/.vst3/ 2>/dev/null || true
+    cp -rn -u /usr/lib64/vst/*  ~/.vst/  2>/dev/null || true
+    cp -rn -u /usr/lib64/lv2/*  ~/.lv2/  2>/dev/null || true
+    cp -rn -u /usr/lib64/clap/* ~/.clap/ 2>/dev/null || true
+    echo 'Plugins copied.'
 
 # ── Flatpaks ──────────────────────────────────────────────────────────────────
 
