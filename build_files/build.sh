@@ -52,48 +52,43 @@ dnf5 -y swap fedora-logos generic-logos
 rpm --erase --nodeps --nodb generic-logos
 
 # COPR audio backages
-dnf5 -y install \
-  yabridge \
-  wine.x86_64 \
-  winetricks \
-  libcurl-gnutls \
-  Loopino-clap \
-  Vaporizer2 \
-  Vaporizer2-vst3 \
-  Vaporizer2-lv2 \
-  Vaporizer2-clap \
-  dexed \
-  dexed-clap \
-  dexed-vst3 \
-  Crypt2 \
-  Crypt2-vst3 \
-  Crypt2-clap \
-  Crypt2-lv2 \
-  LostAndFoundPiano \
-  LostAndFoundPiano-vst3 \
-  LostAndFoundPiano-clap \
-  LostAndFoundPiano-lv2 \
-  vst-DISTRHO-Arctican.x86_64 \
-  vst-DISTRHO-EasySSP.x86_64 \
-  vst-DISTRHO-HiReSam.x86_64 \
-  vst-DISTRHO-JuceOPL.x86_64 \
-  vst-DISTRHO-KlangFalter.x86_64 \
-  vst-DISTRHO-LUFS.x86_64 \
-  vst-DISTRHO-Luftikus.x86_64 \
-  vst-DISTRHO-Obxd.x86_64 \
-  vst-DISTRHO-PitchedDelay.x86_64 \
-  vst-DISTRHO-ReFine.x86_64 \
-  vst-DISTRHO-StereoSourceSeparation.x86_64 \
-  vst-DISTRHO-SwankyAmp.x86_64 \
-  vst-DISTRHO-TAL.x86_64 \
-  vst-DISTRHO-Temper.x86_64 \
-  vst-DISTRHO-Vex.x86_64 \
-  vst-DISTRHO-Wolpertinger.x86_64 \
-  vst-DISTRHO-dRowAudio.x86_64 \
-  vst-DISTRHO-dexed.x86_64 \
-  vst-DISTRHO-drumsynth.x86_64 \
-  vst-DISTRHO-eqinox.x86_64 \
-  vst-DISTRHO-vitalium.x86_64
+# Keep disabled packages outside the install array. Inline comments inside a
+# backslash-continued command will terminate the command and turn later package
+# names into standalone shell commands.
+copr_audio_packages=(
+  yabridge
+  wine.x86_64
+  winetricks
+  libcurl-gnutls
+  Loopino-clap
+  dexed-clap
+  dexed-vst3
+  Crypt2-lv2
+  LostAndFoundPiano-lv2
+  vst-DISTRHO-drumsynth.x86_64
+  vst-DISTRHO-eqinox.x86_64 vst-DISTRHO-vitalium.x86_64
+)
+dnf5 -y install "${copr_audio_packages[@]}"
+# Disabled for image size:
+#  vst-DISTRHO-Arctican.x86_64
+#  vst-DISTRHO-EasySSP.x86_64
+#  vst-DISTRHO-HiReSam.x86_64
+#  vst-DISTRHO-JuceOPL.x86_64
+#  vst-DISTRHO-KlangFalter.x86_64
+#  vst-DISTRHO-LUFS.x86_64
+#  vst-DISTRHO-Luftikus.x86_64
+#  vst-DISTRHO-Obxd.x86_64
+#  vst-DISTRHO-PitchedDelay.x86_64
+#  vst-DISTRHO-ReFine.x86_64
+#  vst-DISTRHO-StereoSourceSeparation.x86_64
+#  vst-DISTRHO-SwankyAmp.x86_64
+#  vst-DISTRHO-TAL.x86_64
+#  vst-DISTRHO-Temper.x86_64
+#  vst-DISTRHO-Vex.x86_64
+#  vst-DISTRHO-Wolpertinger.x86_64
+#  vst-DISTRHO-dRowAudio.x86_64
+#  vst-DISTRHO-drumsynth.x86_64
+#  vst-DISTRHO-eqinox.x86_64 vst-DISTRHO-vitalium.x86_64
 
 # Bazaar app store
 dnf5 -y install krunner-bazaar
@@ -107,12 +102,12 @@ dnf5 -y install \
   rsync \
   neovim \
   alacritty \
-  ripgrep \
   fd-find \
   zoxide \
   fzf \
   python3-tkinter \
-  ublue-os-just
+  ublue-os-just \
+  distrobox
 
 # Virutal Machine Manager and dependencies
 dnf -y install @virtualization
@@ -124,9 +119,7 @@ dnf5 -y install \
   carla
 
 # Virtual instruments
-dnf5 -y install \
-  hydrogen \
-  yoshimi
+dnf5 -y install hydrogen
 
 # Audio firmware
 dnf -y install \
@@ -157,47 +150,39 @@ dnf5 -y install \
   pipewire-alsa
 
 # Midi
-dnf5 -y install \
-  qsynth \
-  fluidsynth \
-  fluid-soundfont-gm \
-  timidity++ \
-  qmidiarp \
-  vmpk \
-  harmonyseq
-
-# Synths
-dnf5 -y install \
-  bristol
-
-# Guitar effects
-dnf5 -y install \
-  rakarrack
+# dnf5 -y install \
+#  qsynth \
+#  fluidsynth \
+#  fluid-soundfont-gm \
+#  timidity++ \
+#  qmidiarp \
+#  vmpk \
+#  harmonyseq
 
 # Audio plugins from official Fedora repos
-dnf5 -y install \
-  lsp-plugins-vst \
-  lsp-plugins-clap \
-  lsp-plugins-lv2 \
-  zam-plugins \
-  calf \
-  guitarix \
-  sooperlooper \
-  musescore \
-  lv2-ll-plugins \
-  lv2-swh-plugins \
-  lv2-vocoder-plugins \
-  lv2-zynadd-plugins \
-  lv2dynparam \
-  lv2-abGate \
-  lv2-samplv1 \
-  lv2-synthv1 \
-  lv2-drumkv1 \
-  lv2-newtonator \
-  lv2-x42-plugins \
-  lv2-sorcer \
-  lv2-fabla \
+fedora_audio_plugin_packages=(
+  lsp-plugins-vst
+  lsp-plugins-clap
+  lsp-plugins-lv2
+  calf
+  guitarix
+  lv2-samplv1
+  lv2-synthv1
+  lv2-drumkv1
   lv2-carla
+)
+dnf5 -y install "${fedora_audio_plugin_packages[@]}"
+# Disabled for image size:
+#  zam-plugins
+#  lv2-ll-plugins
+#  lv2-vocoder-plugins
+#  lv2-zynadd-plugins
+#  lv2dynparam
+#  lv2-abGate
+#  lv2-newtonator
+#  lv2-x42-plugins
+#  lv2-sorcer
+#  lv2-fabla
 
 # ── Packages required by native Linux DAWs and the ujust DAW installers ──────
 # kernel-tools / libX*: needed by Renoise (and other native apps)
