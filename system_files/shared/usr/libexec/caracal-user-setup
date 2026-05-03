@@ -43,7 +43,7 @@ drop_user_seeded_kickoff_favorites_if_pristine() {
 }
 
 migrate_legacy_vapor_theme_config() {
-  local current_look_and_feel current_color_scheme current_plasma_theme
+  local current_look_and_feel current_color_scheme current_plasma_theme current_splash_theme
 
   current_look_and_feel="$(
     kreadconfig6 --file "$USER_CONFIG_DIR/kdeglobals" \
@@ -56,6 +56,10 @@ migrate_legacy_vapor_theme_config() {
   current_plasma_theme="$(
     kreadconfig6 --file "$USER_CONFIG_DIR/plasmarc" \
       --group Theme --key name 2>/dev/null || true
+  )"
+  current_splash_theme="$(
+    kreadconfig6 --file "$USER_CONFIG_DIR/ksplashrc" \
+      --group KSplash --key Theme 2>/dev/null || true
   )"
 
   if [[ "$current_look_and_feel" == "com.valve.vapor.desktop" ]]; then
@@ -79,14 +83,17 @@ migrate_legacy_vapor_theme_config() {
       --key name "default"
   fi
 
-  # Remove any stale ksplashrc for Vapor users
-  if [[ "$current_look_and_feel" == "com.valve.vapor.desktop" ]]; then
+  # Remove any stale user ksplash override so the system Breeze Dark default
+  # can take over after theme migrations.
+  if [[ "$current_look_and_feel" == "com.valve.vapor.desktop" ]] ||
+    [[ "$current_splash_theme" == "org.kde.Breeze" ]] ||
+    [[ "$current_splash_theme" == "com.valve.vapor.desktop" ]]; then
     rm -f "$USER_CONFIG_DIR/ksplashrc"
   fi
 }
 
 # Bump this when user-config migrations need re-application across rebases.
-USER_SETUP_VER=17
+USER_SETUP_VER=19
 
 if [[ -f "$USER_SETUP_VER_FILE" ]]; then
   STORED_VER=$(cat "$USER_SETUP_VER_FILE")
@@ -100,7 +107,7 @@ fi
 # Caracal build wrote problematic custom theme values, rewrite only those
 # specific legacy keys so Plasma falls back to the safer packaged defaults.
 if [[ -f "$USER_CONFIG_DIR/ksplashrc" ]] &&
-  grep -q '^Theme=org\.kde\.Breeze$' "$USER_CONFIG_DIR/ksplashrc"; then
+  grep -Eq '^Theme=(org\.kde\.Breeze|com\.valve\.vapor\.desktop)$' "$USER_CONFIG_DIR/ksplashrc"; then
   rm -f "$USER_CONFIG_DIR/ksplashrc"
 fi
 
