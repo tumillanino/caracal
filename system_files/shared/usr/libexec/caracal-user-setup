@@ -86,7 +86,7 @@ migrate_legacy_vapor_theme_config() {
 }
 
 # Bump this when user-config migrations need re-application across rebases.
-USER_SETUP_VER=17
+USER_SETUP_VER=18
 
 if [[ -f "$USER_SETUP_VER_FILE" ]]; then
   STORED_VER=$(cat "$USER_SETUP_VER_FILE")
