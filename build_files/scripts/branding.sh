@@ -60,10 +60,12 @@ background=/usr/share/wallpapers/caracal/caracal-lake.png
 EOF
 done
 
-# Install splash screen logo into Plasma look-and-feel packages
+# Install splash screen logo into the active Breeze Dark look-and-feel package.
+# Caracal now uses Breeze Dark as the only supported default and ships its own
+# splash assets inside that package.
 SPLASH_LOGO="/ctx/assets/logos/caracal-splash.svg"
-cp "$SPLASH_LOGO" /usr/share/plasma/look-and-feel/com.valve.vapor.desktop/contents/splash/images/caracal-logo.svg
-cp "$SPLASH_LOGO" /usr/share/plasma/look-and-feel/com.valve.vgui.desktop/contents/splash/images/caracal-logo.svg
+mkdir -p /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop/contents/splash/images
+cp "$SPLASH_LOGO" /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop/contents/splash/images/caracal-logo.svg
 
 # Plymouth boot splash: replace watermark with Caracal logo
 # Remove Bazzite/Kinoite animation frames so only our watermark shows

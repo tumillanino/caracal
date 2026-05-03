@@ -65,6 +65,8 @@ copr_audio_packages=(
   dexed-vst3
   Crypt2-lv2
   LostAndFoundPiano-lv2
+  vst-DISTRHO-drumsynth.x86_64
+  vst-DISTRHO-eqinox.x86_64 vst-DISTRHO-vitalium.x86_64
 )
 dnf5 -y install "${copr_audio_packages[@]}"
 # Disabled for image size:
@@ -86,8 +88,7 @@ dnf5 -y install "${copr_audio_packages[@]}"
 #  vst-DISTRHO-Wolpertinger.x86_64
 #  vst-DISTRHO-dRowAudio.x86_64
 #  vst-DISTRHO-drumsynth.x86_64
-#  vst-DISTRHO-eqinox.x86_64
-#  vst-DISTRHO-vitalium.x86_64
+#  vst-DISTRHO-eqinox.x86_64 vst-DISTRHO-vitalium.x86_64
 
 # Bazaar app store
 dnf5 -y install krunner-bazaar
