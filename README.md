@@ -18,6 +18,7 @@ A custom [bootc](https://github.com/bootc-dev/bootc) image built on Fedora Kinoi
 - **Bazzite kernel** — replaces the stock Fedora kernel with Bazzite's pre-built OCI kernel image
 - **CPU governor** — defaults to `performance` mode
 - **Realtime/memlock limits** — `@audio` and `@realtime` groups preconfigured with `rtprio 95` and unlimited memlock through both PAM and `systemd`
+- Preconfigured Wine/Yabridge compatibility for using Windows VST plugins
 
 ### DAWs (included)
 
@@ -59,6 +60,7 @@ Plugins are installed system-wide in LV2, VST3, and CLAP formats where available
 - LSP Plugins (`lsp-plugins-vst`, `lsp-plugins-clap`, `lsp-plugins-lv2`)
 - Calf
 - Guitarix
+- Vitalium (Vital without the online stuff)
 - Dexed
 - Loopino
 - Crypt2
@@ -90,7 +92,7 @@ If you are coming from Windows, the easiest path is:
    - `~/.lv2`
 5. Re-scan plugins in your DAW or restart the DAW.
 
-If those folders do not exist yet, create them. On Linux, folders that start with a `.` are hidden by default, so in a file manager you may need to enable "Show Hidden Files" first. Think of these as your personal plugin folders, similar to keeping plugins in your own user-level VST folders on Windows.
+If those folders do not exist yet, you might not have run the 'ujust first-run' step. To set this up, open Alacritty and run 'ujust first-run'. On Linux, folders that start with a `.` are hidden by default, so in a file manager you may need to enable "Show Hidden Files" first. You can do this by pressing Ctrl+H while in the Home directory.
 
 ### Audio Stack
 
@@ -100,8 +102,8 @@ If those folders do not exist yet, create them. On Linux, folders that start wit
 
 ### Shell & Tooling
 
-- Zsh + Oh My Zsh (pre-configured skel in `/etc/skel`)
-- `oh-my-posh` prompt, `eza`, `zoxide`, `fzf`, `ripgrep`, `fd`
+- Zsh + Oh My Zsh (pre-configured)
+- `eza`, `zoxide`, `fzf`, `ugrep`, `fd`
 - Neovim, Alacritty, 7zip, rsync
 
 ---
@@ -164,28 +166,6 @@ Caracal is trying to cover a wide surface area: audio production workflows, real
 
 If you use Caracal and find a bug, regression, packaging issue, compatibility problem, or workflow rough edge, please open an issue. If you already know the fix, open a pull request.
 
-## Bug Reports & Feature Requests
-
-If you hit a bug, open a [GitHub issue](https://github.com/caracal-dev/caracal/issues/new/choose).
-
-For bug reports, please include:
-
-- What happened
-- What you expected to happen
-- Exact steps to reproduce it
-- Your hardware model, CPU, GPU, and audio interface
-- Whether the issue is on bare metal or in a VM
-- Which DAW, plugin, or device was involved
-- Logs, screenshots, or terminal output if you have them
-
-If you want a new feature, improvement, or package added, open a [feature request](https://github.com/caracal-dev/caracal/issues/new/choose) and explain:
-
-- The workflow or problem you are trying to solve
-- Who the change helps
-- What you want Caracal to do differently
-- Whether there is an existing Linux package, plugin, or project we should integrate
-- Any tradeoffs, risks, or compatibility concerns you already know about
-
 Helpful contribution areas include:
 
 - Testing on different hardware: laptops, desktops, AMD/NVIDIA/Intel graphics, USB audio interfaces, MIDI controllers, and unusual audio chipsets
@@ -215,6 +195,31 @@ Even small contributions help. A tested fix, a better doc note, a hardware repor
 
 ---
 
+## Bug Reports & Feature Requests
+
+If you hit a bug, open a [GitHub issue](https://github.com/caracal-dev/caracal/issues/new/choose).
+
+For bug reports, please include:
+
+- What happened
+- What you expected to happen
+- Exact steps to reproduce it
+- Your hardware model, CPU, GPU, and audio interface
+- Whether the issue is on bare metal or in a VM
+- Which DAW, plugin, or device was involved
+- Logs, screenshots, or terminal output if you have them
+
+If you want a new feature, improvement, or package added, open a [feature request](https://github.com/caracal-dev/caracal/issues/new/choose) and explain:
+
+- The workflow or problem you are trying to solve
+- Who the change helps
+- What you want Caracal to do differently
+- Whether there is an existing Linux package, plugin, or project we should integrate
+- Any tradeoffs, risks, or compatibility concerns you already know about
+
+
+---
+
 ## Image Verification
 
 All published images are signed with [cosign](https://github.com/sigstore/cosign). Verify with:
@@ -234,7 +239,7 @@ cosign verify --key cosign.pub ghcr.io/caracal-dev/caracal:latest
 ## Special Thanks to:
 - Fedora Kinoite - The base this image is built on
 - Universal Blue - for making this type of project possible
-- Bazzite - for the many performance enhancements
+- [Bazzite](https://github.com/ublue-os/bazzite) - for the many performance enhancements
 - [Secureblue](https://github.com/secureblue/secureblue) - for some security improvement ideas
 - [Zirconium](https://github.com/zirconium-dev/zirconium) - excellent learning source
 - [Zena](https://github.com/zena-linux/zena) for providing an example of CachyOS kernel implementation
