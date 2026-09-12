@@ -18,6 +18,8 @@ rsync -rvKlO \
   --exclude='/usr/lib/systemd/user/caracal-setup-launch.service' \
   --exclude='/usr/lib/systemd/user/caracal-user-post-setup.service' \
   --exclude='/usr/lib/systemd/user/caracal-user-setup.service' \
+  --exclude='/usr/lib/systemd/user/caracal-waterfox-config.service' \
+  --exclude='/usr/lib/systemd/user/caracal-waterfox-config.path' \
   --exclude='/usr/share/applications/caracal-software-installer.desktop' \
   --exclude='/usr/share/applications/kcm_caracal_audio.desktop' \
   --exclude='/usr/share/flatpak/***' \

@@ -504,11 +504,13 @@ chmod +x /usr/libexec/caracal-user-setup
 chmod +x /usr/libexec/caracal-cpu-performance
 chmod +x /usr/libexec/caracal-wine-execmod
 chmod +x /usr/libexec/caracal-setup-launch
+chmod +x /usr/libexec/caracal-waterfox-config
 chmod +x /usr/libexec/caracal-flatpak-setup
 chmod +x /usr/libexec/flatpak-preinstall
 systemctl --global enable caracal-setup-launch.service
 systemctl --global enable caracal-user-setup.service
 systemctl --global enable caracal-user-post-setup.service
+systemctl --global enable caracal-waterfox-config.path
 
 # Branding
 bash "${SCRIPTS_DIR}/branding.sh"
