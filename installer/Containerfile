@@ -2,8 +2,8 @@
 #
 # Pattern: get-aurora-dev/iso (Aurora). The live environment IS a released
 # Caracal image plus Anaconda and a dmsquash-live initramfs; the image to be
-# installed is pulled into /usr/lib/containers/storage so the ISO installs
-# fully offline. The bootable ISO itself is assembled afterwards by
+# installed is baked into /usr/lib/caracal as an OCI layout so the ISO
+# installs fully offline. The bootable ISO itself is assembled afterwards by
 # installer/iso_files/build_iso.sh (bootc-isos contract, vendored from
 # ublue-os/titanoboa), which reads the kernel/initramfs, the /boot/efi boot
 # chain, and /usr/lib/bootc-image-builder/iso.yaml from this rootfs.
@@ -14,7 +14,7 @@
 #
 # Build args:
 #   LIVE_ENV_IMAGE    image whose rootfs becomes the live environment
-#   BASE_IMAGE        image the ISO installs (baked into container storage)
+#   BASE_IMAGE        image the ISO installs (baked as OCI layout)
 #   BUNDLE_FLATPAKS   "true" installs installer/iso-flatpaks offline refs
 #   LIVESYS_SESSION   live desktop session: kde | gnome (livesys-scripts)
 ARG LIVE_ENV_IMAGE

@@ -59,9 +59,7 @@ desktop-file-edit \
     --set-key=StartupWMClass --set-value=slitherer \
     /usr/share/applications/liveinst.desktop || true
 
-# Interactive Kickstart: deploy the baked container image (offline)
-tee -a /usr/share/anaconda/interactive-defaults.ks <<EOF
-ostreecontainer --url=${IMAGE_REF}:${IMAGE_TAG} --transport=containers-storage --no-signature-verification
+ostreecontainer --url=/usr/lib/caracal/install:latest --transport=oci --no-signature-verification
 %include /usr/share/anaconda/post-scripts/install-configure-upgrade.ks
 %include /usr/share/anaconda/post-scripts/install-flatpaks.ks
 %include /usr/share/anaconda/post-scripts/secureboot-enroll-key.ks

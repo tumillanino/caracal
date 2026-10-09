@@ -2,10 +2,9 @@
 # Builds a Caracal installer ISO (aurora-iso / bootc-isos pattern).
 #
 # usage: build-iso.sh <output.iso> <payload-image> [live-env-image] [bundle-flatpaks]
-#   output.iso         where the ISO is written (directory is created)
-#   payload-image      image the ISO installs — pulled into the live
-#                      environment's container storage, so installs are
-#                      fully offline
+#   payload-image      image the ISO installs — baked into the live
+#                      environment as an OCI layout, so installs are fully
+#                      offline
 #   live-env-image     image whose rootfs becomes the live desktop
 #                      (defaults to the payload image; override for flavors
 #                      like caracal-stage so the live session has a desktop)
