@@ -4,7 +4,7 @@
 # Adapted from get-aurora-dev/iso (Aurora), Apache-2.0.
 #
 # The install is offline: the payload image was pulled into the live
-# environment's container storage by build.sh, and Anaconda deploys it from
+# environment as an OCI layout by build.sh, and Anaconda deploys it from
 # there via ostreecontainer.
 set -eoux pipefail
 
@@ -59,6 +59,8 @@ desktop-file-edit \
     --set-key=StartupWMClass --set-value=slitherer \
     /usr/share/applications/liveinst.desktop || true
 
+# Interactive Kickstart: deploy the baked OCI layout (offline)
+tee -a /usr/share/anaconda/interactive-defaults.ks <<EOF
 ostreecontainer --url=/usr/lib/caracal/install:latest --transport=oci --no-signature-verification
 %include /usr/share/anaconda/post-scripts/install-configure-upgrade.ks
 %include /usr/share/anaconda/post-scripts/install-flatpaks.ks
